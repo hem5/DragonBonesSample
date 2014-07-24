@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<application xmlns="http://ns.adobe.com/air/application/14.0">
+	<id>DragonBonesSample</id>
+	<filename>DragonBonesSample</filename>
+	<name>DragonBonesSample</name>
+	<versionNumber>0.0.0</versionNumber>
+	<initialWindow>
+		<content>[この値は Flash Builder の出力ファイル app.xml に上書きされます。]</content>
+        <renderMode>direct</renderMode>
+		<autoOrients>true</autoOrients>
+        <fullScreen>false</fullScreen>
+        <visible>true</visible>
+    </initialWindow>
+	    
+    <android>
+        <manifestAdditions><![CDATA[
+			<manifest android:installLocation="auto">
+			    <uses-permission android:name="android.permission.INTERNET"/>
+			</manifest>
+			
+		]]></manifestAdditions>
+    </android>
+    <iPhone>
+        <InfoAdditions><![CDATA[
+			<key>UIDeviceFamily</key>
+			<array>
+				<string>1</string>
+				<string>2</string>
+			</array>
+		]]></InfoAdditions>
+        <requestedDisplayResolution>high</requestedDisplayResolution>
+    </iPhone>
+</application>

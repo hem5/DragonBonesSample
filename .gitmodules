@@ -1,0 +1,3 @@
+[submodule "submodule/DragonBonesAS"]
+	path = submodule/DragonBonesAS
+	url = git@github.com:hem5/DragonBonesAS.git

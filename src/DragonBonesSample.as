@@ -42,34 +42,31 @@ package
             stage.scaleMode = StageScaleMode.NO_SCALE;
             stage.frameRate = 60;
             
-            Starling.multitouchEnabled = true;
-            Starling.handleLostContext = true;
             var mStarling:Starling = new Starling(Game, stage);
-            mStarling.simulateMultitouch  = false;
-            mStarling.enableErrorChecking = false;
-            
             mStarling.start();
-            mStarling.addEventListener(Event.ROOT_CREATED, onRootCreated);
-        }
-        
-        private function onRootCreated(event:Event, game:Game):void
-        {
-            loadDBTest();
+            mStarling.addEventListener(Event.ROOT_CREATED, function(event:Event, game:Game):void {
+                loadSkeltonData();
+            });
         }
         
         [Embed(source="data.dbpng", mimeType="application/octet-stream")]
-        public static const catBinaryClass:Class;
-        private var skeltonData:SkeletonData;
+        public static const FileDataClass:Class;
         private var byteArray:ByteArray;
         
-        private function loadDBTest():void {
-            var factory:StarlingFactory = new StarlingFactory();
-            var catBinary:ByteArray = new catBinaryClass() as ByteArray;
-            var st:int = getTimer();
-            skeltonData = factory.parseData(catBinary);
-            var et:int = getTimer();
-            trace("parse done1 time : "+ (et-st)+" ms");
+        private function loadSkeltonData():void {
             
+            var fileData:ByteArray = new FileDataClass() as ByteArray;
+            var factory:StarlingFactory = new StarlingFactory();
+            
+            var st:int = getTimer();
+            var skeletonData:SkeletonData = factory.parseData(fileData);
+            trace("parse done1 time : "+ (getTimer()-st)+" ms");
+            
+            writeObj(skeletonData);
+            setTimeout(readObj, 1000);
+        }
+        
+        private function writeObj(skeletonData:SkeletonData):void {
             registerClassAlias("String", String);
             registerClassAlias("flash.geom.ColorTransform", ColorTransform);
             registerClassAlias("flash.geom.Point", Point);
@@ -93,17 +90,15 @@ package
             registerClassAlias("dragonBones.objects.IAreaData", IAreaData);
             
             byteArray = new ByteArray();
-            byteArray.writeObject(skeltonData);
+            byteArray.writeObject(skeletonData);
             byteArray.position = 0;
-            setTimeout(readObj, 1000);
         }
         
         private function readObj():void {
             var st:int = getTimer();
-            var skeltonData2:SkeletonData = byteArray.readObject();
-            var et:int = getTimer();
-            trace("parse done2 time : "+ (et-st)+" ms");
-            trace("2 : " + skeltonData2);
+            var data:SkeletonData = byteArray.readObject();
+            trace("parse done2 time : "+ (getTimer()-st)+" ms");
+            trace("read object is SkeletonData ? " + (data is SkeletonData) );
         }
     }
 }

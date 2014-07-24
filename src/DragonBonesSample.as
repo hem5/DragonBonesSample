@@ -61,6 +61,7 @@ package
             var st:int = getTimer();
             var skeletonData:SkeletonData = factory.parseData(fileData);
             trace("parse done1 time : "+ (getTimer()-st)+" ms");
+            // -> 1585ms
             
             writeObj(skeletonData);
             setTimeout(readObj, 1000);
@@ -98,6 +99,7 @@ package
             var st:int = getTimer();
             var data:SkeletonData = byteArray.readObject();
             trace("parse done2 time : "+ (getTimer()-st)+" ms");
+            // -> 851ms
             trace("read object is SkeletonData ? " + (data is SkeletonData) );
         }
     }
